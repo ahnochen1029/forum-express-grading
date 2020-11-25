@@ -12,6 +12,19 @@ const adminController = {
     return res.render('admin/create')
   },
 
+  postRestaurant: (req, res) => {
+    const { name, tel, address, opening_hours, description } = req.body
+    if (!name) {
+      req.flash('error_messages', 'name did not exist')
+      return res.redirect('back')
+    }
+    return Restaurant.create({
+      name, tel, address, opening_hours, description
+    }).then(restaurant => {
+      req.flash('success_messages', 'reataurant was created successfully')
+      res.redirect('/admin/restaurants')
+    })
+  }
 }
 
 module.exports = adminController
