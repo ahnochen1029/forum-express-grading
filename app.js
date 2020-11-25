@@ -5,6 +5,7 @@ const db = require('./models')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
 const app = express()
 const port = 3000
 
@@ -22,6 +23,8 @@ app.use((req, res, next) => {
   res.locals.user = req.user
   next()
 })
+
+app.use(methodOverride('_method'))
 
 
 app.listen(port, () => {
