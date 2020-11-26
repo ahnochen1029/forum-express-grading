@@ -3,6 +3,7 @@ const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const db = require('./models')
 const flash = require('connect-flash')
+const helpers = require('./_helpers')
 const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
@@ -24,7 +25,7 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = req.user
+  res.locals.user = helpers.getUser(req)
   next()
 })
 
