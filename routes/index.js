@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
+const categoryController = require('../controllers/categoryController')
 const passport = require('passport')
 
 const multer = require('multer')
@@ -19,7 +20,6 @@ module.exports = (app) => {
     }
     res.redirect('/signin')
   }
-
 
   app.get('/', authenticated, (req, res) => {
     res.redirect('restaurants')
@@ -45,4 +45,6 @@ module.exports = (app) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failuseRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
+
+  app.get('/admin/categories', categoryController.getCategories)
 }
