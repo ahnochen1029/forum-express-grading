@@ -48,6 +48,14 @@ const categoryController = {
       })
   },
 
+  deleteCategory: (req, res) => {
+    Category.findByPk(req.params.id)
+      .then(category => {
+        category.destroy()
+          .then(() => res.redirect('/admin/categories'))
+      })
+  }
+
 }
 
 module.exports = categoryController
