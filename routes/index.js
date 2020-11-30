@@ -46,5 +46,6 @@ module.exports = (app) => {
   app.post('/signin', passport.authenticate('local', { failuseRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
 
-  app.get('/admin/categories', categoryController.getCategories)
+  app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+  app.post('/admin/categories', authenticatedAdmin, categoryController.postCategories)
 }
