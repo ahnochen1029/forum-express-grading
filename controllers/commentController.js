@@ -9,7 +9,8 @@ const commentController = {
       UserId: req.user.id
     })
       .then(comment => {
-        res.redirect(`/restaurants/${req.body.restaurantId}`)
+        // res.redirect(`/restaurants/${req.body.restaurantId}`)
+        res.redirect(`/restaurants/${comment.RestaurantId}`)
       })
   },
   deleteComment: (req, res) => {
