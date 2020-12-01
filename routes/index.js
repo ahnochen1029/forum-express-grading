@@ -3,6 +3,7 @@ const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
+const commentController = require('../controllers/commentController')
 const passport = require('passport')
 
 const multer = require('multer')
@@ -25,8 +26,8 @@ module.exports = (app) => {
     res.redirect('restaurants')
   })
   app.get('/restaurants', authenticated, restController.getRestaurants)
-
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
+  app.post('/comments', authenticated, commentController.postComment)
 
   app.get('/admin', authenticatedAdmin, (req, res) => {
     res.redirect('/admin/restaurants')
