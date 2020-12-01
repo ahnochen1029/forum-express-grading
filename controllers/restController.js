@@ -5,7 +5,7 @@ const Category = db.Category
 const restController = {
   getRestaurants: (req, res) => {
     let categoryId = ""
-    console.log("whereQuery-1:", whereQuery)
+    const whereQuery = {}
     if (req.query.categoryId) {
       categoryId = Number(req.query.categoryId)
       whereQuery.CategoryId = categoryId
