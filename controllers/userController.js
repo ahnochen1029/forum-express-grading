@@ -77,7 +77,7 @@ const userController = {
             })
               .then((user) => {
                 req.flash('success_messages', 'User was successfully to update')
-                res.redirect('/users/:id')
+                res.redirect(`/users/${user.id}`)
               })
           })
       })
@@ -91,7 +91,7 @@ const userController = {
           })
             .then((user) => {
               req.flash('success_messages', 'User was successfully to update')
-              res.redirect('/users/:id')
+              res.redirect(`/users/${user.id}`)
             })
         })
     }
