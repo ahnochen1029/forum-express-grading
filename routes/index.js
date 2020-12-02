@@ -58,5 +58,6 @@ module.exports = (app) => {
 
   app.get('/users/:id', authenticated, userController.getProfile)
   app.get('/users/:id/edit', authenticated, userController.getProfileEdit)
+  app.put('/users/:id', authenticated, upload.single('image'), userController.putProfile)
 
 }

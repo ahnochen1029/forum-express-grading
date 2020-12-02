@@ -1,7 +1,11 @@
 <div class=" row card">
   <div class="row">
     <div>
+      {{#if user.image}}
+      <img src="{{user.image}}" alt="">
+      {{else}}
       <img src="https://developers.google.com/web/tools/chrome-user-experience-report/images/logo.png" alt="">
+      {{/if}}
     </div>
     <div class="mt-4">
       <h2>{{user.name}}</h2>
