@@ -1,0 +1,14 @@
+<div class=" row card">
+  <div class="row">
+    <div>
+      <img src="https://developers.google.com/web/tools/chrome-user-experience-report/images/logo.png" alt="">
+    </div>
+    <div class="mt-4">
+      <h2>{{user.name}}</h2>
+      <h5>{{user.email}}</h5>
+      <form action="/user/{{user.id}}/edit">
+        <button type="submit" class="btn btn-primary mt-2">EDIT</button>
+      </form>
+    </div>
+  </div>
+</div>
