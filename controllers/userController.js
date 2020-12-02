@@ -49,6 +49,12 @@ const userController = {
       .then(user => {
         res.render('profile', { user: user.toJSON() })
       })
+  },
+  getProfileEdit: (req, res) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        res.render('profileEdit')
+      })
   }
 }
 

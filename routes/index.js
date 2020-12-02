@@ -57,4 +57,6 @@ module.exports = (app) => {
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
   app.get('/users/:id', authenticated, userController.getProfile)
+  app.get('/users/:id/edit', authenticated, userController.getProfileEdit)
+
 }
