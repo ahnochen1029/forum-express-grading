@@ -16,11 +16,20 @@ module.exports = (app) => {
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
+      console.log('helpers.getUser(req)', helpers.getUser(req))
       if (helpers.getUser(req).isAdmin) { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
   }
+  const authenticatedUser = (req, res, next) => {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).id === Number(req.params.id)) { return next() }
+      return res.redirect('back')
+    }
+    res.redirect('/signin')
+  }
+
 
   app.get('/', authenticated, (req, res) => {
     res.redirect('restaurants')
@@ -57,7 +66,7 @@ module.exports = (app) => {
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
   app.get('/users/:id', authenticated, userController.getProfile)
-  app.get('/users/:id/edit', authenticated, userController.getProfileEdit)
-  app.put('/users/:id', authenticated, upload.single('image'), userController.putProfile)
+  app.get('/users/:id/edit', authenticatedUser, userController.getProfileEdit)
+  app.put('/users/:id', authenticatedUser, upload.single('image'), userController.putProfile)
 
 }

@@ -61,6 +61,8 @@ const userController = {
           where: { UserId }
         }).then(result => {
           const commentOfRest = result.rows.map(commentsOfRest => commentsOfRest.Restaurant)
+          console.log('user.id', user.id)
+          console.log('UserId', UserId)
           res.render('profile', {
             user: user.toJSON(),
             count: result.count,
