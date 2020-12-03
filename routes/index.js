@@ -35,7 +35,9 @@ module.exports = (app) => {
     res.redirect('restaurants')
   })
   app.get('/restaurants', authenticated, restController.getRestaurants)
+  app.get('/restaurants/feeds', authenticated, restController.getFeeds)
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
+
   app.post('/comments', authenticated, commentController.postComment)
   app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 

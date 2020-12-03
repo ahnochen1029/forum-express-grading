@@ -64,6 +64,31 @@ const restController = {
       .then(restaurant => {
         return res.render('restaurant', { restaurant: restaurant.toJSON() })
       })
+  },
+  getFeeds: (req, res) => {
+    return Promise.all([
+      Restaurant.findAll({
+        limit: 10,
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']],
+        include: [Category]
+      }),
+      Comment.findAll({
+        limit: 10,
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']],
+        include: [User, Restaurant]
+      })
+    ]).then(([restaurants, comments]) => {
+      console.log('restaurants', restaurants[0])
+      console.log('comments', comments[0])
+      return res.render('feeds', {
+        restaurants,
+        comments
+      })
+    })
   }
 }
 
