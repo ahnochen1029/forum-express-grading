@@ -92,13 +92,23 @@ const restController = {
     })
   },
   getDashboard: (req, res) => {
-    Restaurant.findByPk(req.params.id, {
-      include: [Category]
-    }).then(restaurant => {
-      console.log('restaurant', restaurant)
-      return res.render('restDashboard', { restaurant: restaurant.toJSON() })
+    const restaurantId = req.params.id
+    Promise.all([
+      Restaurant.findByPk(restaurantId, {
+        raw: true,
+        nest: true,
+        include: Category,
+      }),
+      Comment.findAndCountAll({
+        raw: true,
+        nest: true,
+        where: { restaurantId },
+        include: Restaurant
+      })
+    ]).then(([restaurant, comments]) => {
+      return res.render('restDashboard', { restaurant, commentsCount: comments.count })
     })
-  }
+  },
 }
 
 module.exports = restController
