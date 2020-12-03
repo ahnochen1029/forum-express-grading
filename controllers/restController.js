@@ -82,12 +82,17 @@ const restController = {
         include: [User, Restaurant]
       })
     ]).then(([restaurants, comments]) => {
-      console.log('restaurants', restaurants[0])
-      console.log('comments', comments[0])
       return res.render('feeds', {
         restaurants,
         comments
       })
+    })
+  },
+  getDashboard: (req, res) => {
+    Restaurant.findByPk(req.params.id, {
+      include: Category
+    }).then(restaurant => {
+      res.render('restDashboard', { restaurant: restaurant.toJSON() })
     })
   }
 }
