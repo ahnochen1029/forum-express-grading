@@ -10,7 +10,7 @@
     <div class="col-md-8 card-body">
       <h2>{{user.name}}</h2>
       <h5>{{user.email}}</h5>
-      <h5>5則已評論餐廳</h5>
+      <h5>{{count}} 則已評論餐廳</h5>
       <form action="/users/{{user.id}}/edit">
         <button type="submit" class="btn btn-primary mt-2">EDIT</button>
       </form>
@@ -19,24 +19,21 @@
 </div>
 
 <div class="card mt-3">
-  <h5 class="card-header">5則已評論餐廳</h5>
+  <h5 class="card-header">{{count}} 則已評論餐廳</h5>
   <div class="card-body">
     <div class="card-group">
+      {{#each commentOfRest}}
+      {{#if this.image}}
       <div class="card col-sm-2 mx-1">
-        <a href="/"><img
-            src="https://stickershop.line-scdn.net/stickershop/v1/product/14378/LINEStorePC/main.png;compress=true"
+        <a href='/restaurants/{{this.id}}'><img src="{{this.image}}" class="card-img-top"></a>
+      </div>
+      {{else}}
+      <div class="card col-sm-2 mx-1">
+        <a href='/restaurants/{{this.id}}'><img src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
             class="card-img-top"></a>
       </div>
-      <div class="card col-sm-2 mx-1">
-        <a href="/"><img
-            src="https://stickershop.line-scdn.net/stickershop/v1/product/14378/LINEStorePC/main.png;compress=true"
-            class="card-img-top"></a>
-      </div>
-      <div class="card col-sm-2 mx-1">
-        <a href="/"><img
-            src="https://stickershop.line-scdn.net/stickershop/v1/product/14378/LINEStorePC/main.png;compress=true"
-            class="card-img-top"></a>
-      </div>
+      {{/if}}
+      {{/each}}
     </div>
   </div>
 </div>
