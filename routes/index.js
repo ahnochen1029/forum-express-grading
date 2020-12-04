@@ -4,12 +4,12 @@ const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
 const commentController = require('../controllers/commentController')
-const passport = require('passport')
+// const passport = require('passport')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
-module.exports = (app) => {
+module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) { return next() }
     res.redirect('/signin')

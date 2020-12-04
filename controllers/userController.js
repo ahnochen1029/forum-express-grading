@@ -5,7 +5,6 @@ const Restaurant = db.Restaurant
 const Comment = db.Comment
 
 const imgur = require('imgur-node-api')
-const { createRestaurant } = require('./adminController')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
