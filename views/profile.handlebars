@@ -12,10 +12,10 @@
         <h2>{{user.name}}</h2>
         <h5>{{user.email}}</h5>
         <br>
-        <h5>{{count}} 則已評論餐廳</h5>
-        <h5>{{countOfFav}} 個收藏的餐廳</h5>
-        <h5>{{followings}} 人追蹤中</h5>
-        <h5>{{followers}} 個粉蝨</h5>
+        <h5><strong>{{count}}</strong> 已評論餐廳</h5>
+        <h5><strong>{{countOfFav}}</strong> 收藏的餐廳</h5>
+        <h5><strong>{{followings}}</strong> followings</h5>
+        <h5><strong>{{followers}}</strong> followers</h5>
         <br>
         <form action="/users/{{user.id}}/edit">
           <button type="submit" class="btn btn-primary mt-2">EDIT</button>
