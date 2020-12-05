@@ -41,17 +41,15 @@
       <h5 class="card-header">{{count}} 則已評論餐廳</h5>
       <div class="card-body">
         <div class="card-group">
-          {{#each commentOfRest}}
-          {{#if this.image}}
+          {{#each userComments}}
+
           <div class="card col-sm-2 mx-1 no-gutters">
-            <a href='/restaurants/{{this.id}}'><img src="{{this.image}}" class="card-img-top"></a>
-          </div>
-          {{else}}
-          <div class="card col-sm-2 mx-1 no-gutters">
+
             <a href='/restaurants/{{this.id}}'><img
-                src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg" class="card-img-top"></a>
+                src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
+                style="width: 80px; height: 80px;"></a>
           </div>
-          {{/if}}
+
           {{/each}}
         </div>
       </div>
@@ -62,10 +60,11 @@
       <h5 class="card-header">{{followers}} 個粉蝨</h5>
       <div class="card-body">
         <div class="card-group">
+          {{#each userFollowers}}
           <div class="card col-sm-2 mx-1">
-            <a href='/restaurants/:id'><img src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
-                class="card-img-top"></a>
+            <a href='/users/{{this.id}}'><img src="{{this.image}}" class="card-img-top"></a>
           </div>
+          {{/each}}
         </div>
       </div>
     </div>

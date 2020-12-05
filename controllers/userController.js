@@ -197,27 +197,25 @@ const userController = {
         { model: Restaurant, as: 'FavoritedRestaurants' }
       ]
     }).then(user => {
-      // console.log("------------------------ ")
-      // console.log('user.Followers', user.toJSON().Followers)
-      // console.log("------------------------ ")
-      // console.log('user.Followings', user.toJSON().Followings)
-      // console.log("------------------------ ")
-      // console.log('user.Comments', user.toJSON().Comments)
-      // console.log("------------------------ ")
       // console.log('user.FavoritedRestaurants:', user.toJSON().FavoritedRestaurants)
       // console.log("------------------------ ")
       userFollowings = user.Followings.map(r => ({
         ...r.dataValues,
       }))
-      console.log('userFollowings', userFollowings)
+      userFollowers = user.Followers.map(r => ({
+        ...r.dataValues,
+      }))
+
+      userComments = user.toJSON().Comments.map(r => r.Restaurant)
+
       res.render('profile', {
         user: user.toJSON(),
-        count: user.toJSON().Comments.length,
+        count: userComments.length,
         countOfFav: user.toJSON().FavoritedRestaurants.length,
         commentOfRest: user.toJSON().FavoritedRestaurants,
         followers: user.toJSON().Followers.length,
         followings: user.toJSON().Followings.length,
-        userFollowings
+        userFollowings, userFollowers, userComments
       })
 
 
