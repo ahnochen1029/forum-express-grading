@@ -1,39 +1,84 @@
-<div class="card">
-  <div class="row">
-    <div class="col-md-4 card-body">
-      {{#if user.image}}
-      <img src="{{user.image}}" alt="">
-      {{else}}
-      <img src="https://developers.google.com/web/tools/chrome-user-experience-report/images/logo.png" alt="">
-      {{/if}}
-    </div>
-    <div class="col-md-8 card-body">
-      <h2>{{user.name}}</h2>
-      <h5>{{user.email}}</h5>
-      <h5>{{count}} 則已評論餐廳</h5>
-      <form action="/users/{{user.id}}/edit">
-        <button type="submit" class="btn btn-primary mt-2">EDIT</button>
-      </form>
+<div class="mx-auto" style="max-width: 1080x;">
+  <div class="card mx-auto">
+    <div class="row">
+      <div class="col-md-4 card-body">
+        {{#if user.image}}
+        <img src="{{user.image}}" alt="">
+        {{else}}
+        <img src="https://developers.google.com/web/tools/chrome-user-experience-report/images/logo.png" alt="">
+        {{/if}}
+      </div>
+      <div class="col-md-8 card-body">
+        <h2>{{user.name}}</h2>
+        <h5>{{user.email}}</h5>
+        <br>
+        <h5>{{count}} 則已評論餐廳</h5>
+        <h5>5 個收藏的餐廳</h5>
+        <h5>1 人追蹤中</h5>
+        <h5>3 個粉蝨</h5>
+        <br>
+        <form action="/users/{{user.id}}/edit">
+          <button type="submit" class="btn btn-primary mt-2">EDIT</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+  <div class="row mx-auto" style="height: fit-content;">
+    <div class="card mt-3 col-md-4">
+      <h5 class="card-header">1 人追蹤中</h5>
+      <div class="card-body">
+        <div class="card-group">
+          <div class="card col-sm-4 mx-1 no-gutters">
+            <a href='/restaurants/:id'><img src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
+                class="card-img-top"></a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="card mt-3">
-  <h5 class="card-header">{{count}} 則已評論餐廳</h5>
-  <div class="card-body">
-    <div class="card-group">
-      {{#each commentOfRest}}
-      {{#if this.image}}
-      <div class="card col-sm-2 mx-1">
-        <a href='/restaurants/{{this.id}}'><img src="{{this.image}}" class="card-img-top"></a>
+    <div class="card mt-3 col-md-8">
+      <h5 class="card-header">{{count}} 則已評論餐廳</h5>
+      <div class="card-body">
+        <div class="card-group">
+          {{#each commentOfRest}}
+          {{#if this.image}}
+          <div class="card col-sm-2 mx-1 no-gutters">
+            <a href='/restaurants/{{this.id}}'><img src="{{this.image}}" class="card-img-top"></a>
+          </div>
+          {{else}}
+          <div class="card col-sm-2 mx-1 no-gutters">
+            <a href='/restaurants/{{this.id}}'><img
+                src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg" class="card-img-top"></a>
+          </div>
+          {{/if}}
+          {{/each}}
+        </div>
       </div>
-      {{else}}
-      <div class="card col-sm-2 mx-1">
-        <a href='/restaurants/{{this.id}}'><img src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
-            class="card-img-top"></a>
+    </div>
+  </div>
+  <div class="row mx-auto">
+    <div class="card mt-3 col-md-4">
+      <h5 class="card-header">3 個粉蝨</h5>
+      <div class="card-body">
+        <div class="card-group">
+          <div class="card col-sm-2 mx-1">
+            <a href='/restaurants/:id'><img src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
+                class="card-img-top"></a>
+          </div>
+        </div>
       </div>
-      {{/if}}
-      {{/each}}
+    </div>
+
+    <div class="card mt-3 col-md-8">
+      <h5 class="card-header">5 個收藏的餐廳</h5>
+      <div class="card-body">
+        <div class="card-group">
+          <div class="card col-sm-2 mx-1">
+            <a href='/restaurants/:id'><img src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
+                class="card-img-top"></a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
