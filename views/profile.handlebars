@@ -13,9 +13,9 @@
         <h5>{{user.email}}</h5>
         <br>
         <h5>{{count}} 則已評論餐廳</h5>
-        <h5>5 個收藏的餐廳</h5>
-        <h5>1 人追蹤中</h5>
-        <h5>3 個粉蝨</h5>
+        <h5>{{countOfFav}} 個收藏的餐廳</h5>
+        <h5>{{followings}} 人追蹤中</h5>
+        <h5>{{followers}} 個粉蝨</h5>
         <br>
         <form action="/users/{{user.id}}/edit">
           <button type="submit" class="btn btn-primary mt-2">EDIT</button>
@@ -25,13 +25,14 @@
   </div>
   <div class="row mx-auto" style="height: fit-content;">
     <div class="card mt-3 col-md-4">
-      <h5 class="card-header">1 人追蹤中</h5>
+      <h5 class="card-header">{{followings}} 人追蹤中</h5>
       <div class="card-body">
         <div class="card-group">
+          {{#each userFollowings}}
           <div class="card col-sm-4 mx-1 no-gutters">
-            <a href='/restaurants/:id'><img src="https://s7d2.scene7.com/is/image/TWCNews/050220_pix_restaurant2jpg"
-                class="card-img-top"></a>
+            <a href='/users/{{this.id}}'><img src="{{this.image}}" class="card-img-top"></a>
           </div>
+          {{/each}}
         </div>
       </div>
     </div>
@@ -58,7 +59,7 @@
   </div>
   <div class="row mx-auto">
     <div class="card mt-3 col-md-4">
-      <h5 class="card-header">3 個粉蝨</h5>
+      <h5 class="card-header">{{followers}} 個粉蝨</h5>
       <div class="card-body">
         <div class="card-group">
           <div class="card col-sm-2 mx-1">
@@ -70,7 +71,7 @@
     </div>
 
     <div class="card mt-3 col-md-8">
-      <h5 class="card-header">5 個收藏的餐廳</h5>
+      <h5 class="card-header">{{countOfFav}} 個收藏的餐廳</h5>
       <div class="card-body">
         <div class="card-group">
           <div class="card col-sm-2 mx-1">
