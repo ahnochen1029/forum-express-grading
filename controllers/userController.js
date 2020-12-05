@@ -52,26 +52,37 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-
-  // getProfile: (req, res) => {
-  //   const UserId = req.params.id
-  //   User.findByPk(req.params.id)
-  //     .then(user => {
-  //       Comment.findAndCountAll({
-  //         raw: true,
-  //         nest: true,
-  //         include: Restaurant,
-  //         where: { UserId }
-  //       }).then(result => {
-  //         const commentOfRest = result.rows.map(commentsOfRest => commentsOfRest.Restaurant)
-  //         res.render('profile', {
-  //           user: user.toJSON(),
-  //           count: result.count,
-  //           commentOfRest
-  //         })
-  //       })
-  //     })
-  // },
+  getProfile: (req, res) => {
+    const UserId = req.params.id
+    User.findByPk(UserId, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Comment, include: [Restaurant] },
+        { model: Restaurant, as: 'FavoritedRestaurants' }
+      ]
+    }).then(user => {
+      userFollowings = user.Followings.map(r => ({
+        ...r.dataValues,
+      }))
+      userFollowers = user.Followers.map(r => ({
+        ...r.dataValues,
+      }))
+      userFavoritedRest = user.FavoritedRestaurants.map(r => ({
+        ...r.dataValues,
+      }))
+      userComments = user.toJSON().Comments.map(r => r.Restaurant)
+      return res.render('profile', {
+        user: user.toJSON(),
+        count: userComments.length,
+        countOfFav: user.toJSON().FavoritedRestaurants.length,
+        commentOfRest: user.toJSON().FavoritedRestaurants,
+        followers: user.toJSON().Followers.length,
+        followings: user.toJSON().Followings.length,
+        userFollowings, userFollowers, userComments, userFavoritedRest
+      })
+    })
+  },
   getProfileEdit: (req, res) => {
     User.findByPk(req.params.id)
       .then(user => {
@@ -172,54 +183,6 @@ const userController = {
       return res.render('topUser', { users })
     })
   },
-
-  getProfile: (req, res) => {
-    // return User.findAll({
-    //   include: [{ model: User, as: 'Followers' }]
-    // }).then(users => {
-    //   users = users.map(user => ({
-    //     ...user.dataValues,
-    //     // 計算追蹤者人數
-    //     FollowerCount: user.Followers.length,
-    //     // 判斷目前登入使用者是否已追蹤該 User 物件
-    //     isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-    //   }))
-    //   users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-    //   return res.render('topUser', { users })
-    // })
-
-    const UserId = req.params.id
-    User.findByPk(UserId, {
-      include: [
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
-        { model: Comment, include: [Restaurant] },
-        { model: Restaurant, as: 'FavoritedRestaurants' }
-      ]
-    }).then(user => {
-      userFollowings = user.Followings.map(r => ({
-        ...r.dataValues,
-      }))
-      userFollowers = user.Followers.map(r => ({
-        ...r.dataValues,
-      }))
-      userFavoritedRest = user.FavoritedRestaurants.map(r => ({
-        ...r.dataValues,
-      }))
-      userComments = user.toJSON().Comments.map(r => r.Restaurant)
-      return res.render('profile', {
-        user: user.toJSON(),
-        count: userComments.length,
-        countOfFav: user.toJSON().FavoritedRestaurants.length,
-        commentOfRest: user.toJSON().FavoritedRestaurants,
-        followers: user.toJSON().Followers.length,
-        followings: user.toJSON().Followings.length,
-        userFollowings, userFollowers, userComments, userFavoritedRest
-      })
-    })
-  },
-
-
   addFollowing: (req, res) => {
     return Followship.create({
       followerId: helpers.getUser(req).id,
