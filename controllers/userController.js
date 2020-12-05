@@ -161,7 +161,6 @@ const userController = {
     return User.findAll({
       include: [{ model: User, as: 'Followers' }]
     }).then(users => {
-      console.log("users", users[0])
       users = users.map(user => ({
         ...user.dataValues,
         // 計算追蹤者人數
@@ -195,9 +194,7 @@ const userController = {
     })
 
 
-  },
-  getTopRestaurant: (req, res) => {
-    res.render('topRestaurants')
   }
+
 }
 module.exports = userController

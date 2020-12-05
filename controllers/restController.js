@@ -77,29 +77,6 @@ const restController = {
         })
       })
   },
-
-  // getRestaurant: (req, res) => {
-  //   Restaurant.findByPk(req.params.id, {
-  //     include: [
-  //       Category,
-  //       { model: User, as: 'FavoritedUsers' },
-  //       { model: User, as: 'LikedUsers' },
-  //       { model: Comment, include: User }
-  //     ]
-  //   }).then(restaurant => {
-  //     restaurant.viewCounts = restaurant.viewCounts + 1
-  //     restaurant.save().then(restaurant => {
-  //       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-  //       const isLiked = restaurant.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
-  //       return res.render('restaurant', {
-  //         restaurant: restaurant.toJSON(),
-  //         isFavorited,
-  //         isLiked
-  //       })
-  //     })
-  //   })
-  // },
-
   getFeeds: (req, res) => {
     return Promise.all([
       Restaurant.findAll({
@@ -141,6 +118,24 @@ const restController = {
       return res.render('restDashboard', { restaurant, commentsCount: comments.count })
     })
   },
+  getTopRestaurant: (req, res) => {
+    const USERID = helpers.getUser(req).id
+    Restaurant.findAll({
+      include: [
+        { model: User, as: 'FavoritedUsers' }
+      ]
+    }).then(restaurants => {
+      restaurants = restaurants.map(r => ({
+        ...r.dataValues,
+        description: r.description.substring(0, 50),
+        topRestaurantCount: r.FavoritedUsers.length,
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
+      }))
+      restaurants = restaurants.sort((a, b) => b.topRestaurantCount - a.topRestaurantCount)
+      restaurants = restaurants.slice(0, 10)
+      return res.render('topRestaurants', { restaurants })
+    })
+  }
 }
 
 module.exports = restController
