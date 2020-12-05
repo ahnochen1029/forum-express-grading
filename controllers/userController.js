@@ -142,7 +142,7 @@ const userController = {
       return res.redirect('back')
     })
   },
-  dislikeRestaurant: (req, res) => {
+  unlikeRestaurant: (req, res) => {
     return Like.findOne({
       where: {
         UserId: req.user.id,

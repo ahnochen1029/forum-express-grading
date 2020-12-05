@@ -1,4 +1,5 @@
 const db = require('../models')
+const helpers = require('../_helpers.js')
 const Restaurant = db.Restaurant
 const Category = db.Category
 const Comment = db.Comment
@@ -37,9 +38,9 @@ const restController = {
           ...r.dataValues,
           description: r.dataValues.description.substring(0, 50),
           categoryName: r.dataValues.Category.name,
-          isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id),
+          isFavorited: helpers.getUser(req).FavoritedRestaurants.map(d => d.id).includes(r.id),
+          isLiked: helpers.getUser(req).LikeRestaurants.map(d => d.id).includes(r.id)
         }))
-        console.log('data', data[0])
         Category.findAll({
           raw: true,
           nest: true
@@ -61,17 +62,43 @@ const restController = {
       include: [
         Category,
         { model: User, as: 'FavoritedUsers' },
+        { model: User, as: 'LikedUsers' },
         { model: Comment, include: [User] }
       ]
     })
       .then(restaurant => {
-        const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+        const USERID = helpers.getUser(req).id
         restaurant.viewCounts = restaurant.viewCounts + 1
         restaurant.save().then(restaurant => {
-          return res.render('restaurant', { restaurant: restaurant.toJSON(), isFavorited })
+          const isLiked = restaurant.LikedUsers.map(e => e.id).includes(USERID)
+          const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(USERID)
+          return res.render('restaurant', { restaurant: restaurant.toJSON(), isFavorited, isLiked })
         })
       })
   },
+
+  // getRestaurant: (req, res) => {
+  //   Restaurant.findByPk(req.params.id, {
+  //     include: [
+  //       Category,
+  //       { model: User, as: 'FavoritedUsers' },
+  //       { model: User, as: 'LikedUsers' },
+  //       { model: Comment, include: User }
+  //     ]
+  //   }).then(restaurant => {
+  //     restaurant.viewCounts = restaurant.viewCounts + 1
+  //     restaurant.save().then(restaurant => {
+  //       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+  //       const isLiked = restaurant.LikedUsers.map(item => item.id).includes(helpers.getUser(req).id)
+  //       return res.render('restaurant', {
+  //         restaurant: restaurant.toJSON(),
+  //         isFavorited,
+  //         isLiked
+  //       })
+  //     })
+  //   })
+  // },
+
   getFeeds: (req, res) => {
     return Promise.all([
       Restaurant.findAll({
