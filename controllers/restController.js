@@ -58,7 +58,8 @@ const restController = {
       })
   },
   getRestaurant: (req, res) => {
-    Restaurant.findByPk(req.params.id, {
+    const ID = req.params.id
+    Restaurant.findByPk(ID, {
       include: [
         Category,
         { model: User, as: 'FavoritedUsers' },
