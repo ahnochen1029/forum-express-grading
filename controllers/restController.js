@@ -4,6 +4,7 @@ const Restaurant = db.Restaurant
 const Category = db.Category
 const Comment = db.Comment
 const User = db.User
+const Favorite = db.Favorite
 
 const pageLimit = 12
 
@@ -70,7 +71,6 @@ const restController = {
       .then(restaurant => {
         const USERID = helpers.getUser(req).id
         restaurant.viewCounts = restaurant.viewCounts + 1
-        console.log('restaurant.viewCounts', restaurant.viewCounts)
         restaurant.save().then(restaurant => {
           const isLiked = restaurant.LikedUsers.map(e => e.id).includes(USERID)
           const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(USERID)
@@ -107,20 +107,26 @@ const restController = {
       Restaurant.findByPk(restaurantId, {
         raw: true,
         nest: true,
-        include: Category,
+        include: [
+          Category,
+        ],
       }),
       Comment.findAndCountAll({
         raw: true,
         nest: true,
         where: { restaurantId },
         include: Restaurant
+      }),
+      Favorite.findAndCountAll({
+        raw: true,
+        nest: true,
+        where: { restaurantId },
       })
-    ]).then(([restaurant, comments]) => {
-      return res.render('restDashboard', { restaurant, commentsCount: comments.count })
+    ]).then(([restaurant, comments, favorite]) => {
+      return res.render('restDashboard', { restaurant, commentsCount: comments.count, favoriteCount: favorite.rows.length })
     })
   },
   getTopRestaurant: (req, res) => {
-    const USERID = helpers.getUser(req).id
     Restaurant.findAll({
       include: [
         { model: User, as: 'FavoritedUsers' }
