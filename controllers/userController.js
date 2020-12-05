@@ -7,6 +7,7 @@ const Favorite = db.Favorite
 const Like = db.Like
 const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
+const user = require('../models/user')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -153,6 +154,22 @@ const userController = {
         .then(restaurant => {
           return res.redirect('back')
         })
+    })
+  },
+  getTopUser: (req, res) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }).then(users => {
+      console.log("users", users[0])
+      users = users.map(user => ({
+        ...user.dataValues,
+        // 計算追蹤者人數
+        FollowerCount: user.Followers.length,
+        // 判斷目前登入使用者是否已追蹤該 User 物件
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+      }))
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      return res.render('topUser', { users })
     })
   }
 }
