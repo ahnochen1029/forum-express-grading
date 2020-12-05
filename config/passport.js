@@ -31,7 +31,10 @@ passport.deserializeUser((id, done) => {
       //add favorite
       { model: Restaurant, as: 'FavoritedRestaurants' },
       //add like
-      { model: Restaurant, as: 'LikeRestaurants' }
+      { model: Restaurant, as: 'LikeRestaurants' },
+      //add followship
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' }
     ]
   }).then(user => {
     user = user.toJSON()
