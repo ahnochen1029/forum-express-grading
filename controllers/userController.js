@@ -195,6 +195,9 @@ const userController = {
     })
 
 
+  },
+  getTopRestaurant: (req, res) => {
+    res.render('topRestaurants')
   }
 }
 module.exports = userController
