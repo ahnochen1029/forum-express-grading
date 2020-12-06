@@ -2,33 +2,35 @@
   <div class="card mx-auto">
     <div class="row">
       <div class="col-md-4 card-body">
-        {{#if user.image}}
-        <img src="{{user.image}}" alt="" class="card-img">
+        {{#if profile.image}}
+        <img src="{{profile.image}}" alt="" class="card-img">
         {{else}}
         <img src="https://developers.google.com/web/tools/chrome-user-experience-report/images/logo.png" alt=""
           class="card-img">
         {{/if}}
       </div>
       <div class="col-md-8 card-body">
-        <h2>{{user.name}}</h2>
-        <h5>{{user.email}}</h5>
+        <h2>{{profile.name}}</h2>
+        <h5>{{profile.email}}</h5>
         <br>
-        <h5><strong>{{count}}</strong> 已評論餐廳</h5>
-        <h5><strong>{{countOfFav}}</strong> 收藏的餐廳</h5>
-        <h5><strong>{{followings}}</strong> followings</h5>
-        <h5><strong>{{followers}}</strong> followers</h5>
+        <h5><strong>{{profileComments.length}}</strong> 已評論餐廳</h5>
+        <h5><strong>{{profile.FavoritedRestaurants.length}}</strong> 收藏的餐廳</h5>
+        <h5><strong>{{profile.Followings.length}}</strong> followings</h5>
+        <h5><strong>{{profile.Followers.length}}</strong> followers</h5>
         <br>
+        {{#ifCond user.id profile.id}}
         <form action="/users/{{user.id}}/edit">
           <button type="submit" class="btn btn-primary mt-2">EDIT</button>
         </form>
+        {{/ifCond}}
       </div>
     </div>
   </div>
   <div class="row mx-auto">
     <div class="card mt-3 col-md-4">
-      <h5 class="card-header">{{followings}} 人追蹤中</h5>
+      <h5 class="card-header">{{profile.Followings.length}} 人追蹤中</h5>
       <div class="card-body row">
-        {{#each userFollowings}}
+        {{#each profile.Followings}}
         <div class="mr-2 mt-2">
           <a href='/users/{{this.id}}'><img
               src="{{#if this.image}}{{this.image}}{{else}}https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png{{/if}}"
@@ -39,9 +41,9 @@
     </div>
 
     <div class="card mt-3 col-md-8">
-      <h5 class="card-header" style="">{{count}} 則已評論餐廳</h5>
+      <h5 class="card-header" style="">{{profileComments.length}} 則已評論餐廳</h5>
       <div class="card-body row">
-        {{#each userComments}}
+        {{#each profileComments}}
         <div class="mr-2 mt-2">
           <a href='/restaurants/{{this.id}}'><img
               src="{{#if this.image}}{{this.image}}{{else}}https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Barbieri_-_ViaSophia25668.jpg/1200px-Barbieri_-_ViaSophia25668.jpg{{/if}}"
@@ -53,9 +55,9 @@
   </div>
   <div class="row mx-auto">
     <div class="card mt-3 col-md-4">
-      <h5 class="card-header">{{followers}} 個粉蝨</h5>
+      <h5 class="card-header">{{profile.Followers.length}} 個粉蝨</h5>
       <div class="card-body row">
-        {{#each userFollowers}}
+        {{#each profile.Followers}}
         <div class="mr-2 mt-2">
           <a href='/users/{{this.id}}'><img
               src="{{#if this.image}}{{this.image}}{{else}}https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-alt-512.png{{/if}}"
@@ -66,9 +68,9 @@
     </div>
 
     <div class="card mt-3 col-md-8">
-      <h5 class="card-header">{{countOfFav}} 個收藏的餐廳</h5>
+      <h5 class="card-header">{{profile.FavoritedRestaurants.length}} 個收藏的餐廳</h5>
       <div class="card-body row">
-        {{#each userFavoritedRest}}
+        {{#each profile.FavoritedRestaurants}}
         <div class="mr-2 mt-2">
           <a href='/restaurants/{{this.id}}'><img
               src="{{#if this.image}}{{this.image}}{{else}}https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Barbieri_-_ViaSophia25668.jpg/1200px-Barbieri_-_ViaSophia25668.jpg{{/if}}"
