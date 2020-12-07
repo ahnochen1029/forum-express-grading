@@ -1,7 +1,7 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-const db = require('./models')
+// const db = require('./models')
 const flash = require('connect-flash')
 const helpers = require('./_helpers')
 const session = require('express-session')
@@ -39,6 +39,5 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
-module.exports = app
