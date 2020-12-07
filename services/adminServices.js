@@ -124,6 +124,18 @@ const adminServices = {
         return callback({ status: 'success', message: `create new category: ${category.name}` })
       })
   },
+  putCategory: (req, res, callback) => {
+    if (!req.body.name) {
+      return callback({ status: 'error', message: "category didn't exist" })
+    }
+    return Category.findByPk(req.params.id)
+      .then(category => {
+        category.update(req.body)
+          .then(category => {
+            return callback({ status: 'success', message: `update category: ${category.name}` })
+          })
+      })
+  },
 }
 
 module.exports = adminServices

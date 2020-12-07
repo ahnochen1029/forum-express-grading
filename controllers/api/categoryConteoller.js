@@ -1,4 +1,3 @@
-const db = require('../../models')
 const adminServices = require('../../services/adminServices')
 
 const categoryController = {
@@ -9,6 +8,11 @@ const categoryController = {
   },
   postCategories: (req, res) => {
     adminServices.postCategories(req, res, data => {
+      return res.json(data)
+    })
+  },
+  putCategory: (req, res) => {
+    adminServices.putCategory(req, res, data => {
       return res.json(data)
     })
   },
