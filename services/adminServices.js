@@ -70,7 +70,6 @@ const adminServices = {
       })
     }
   },
-
   putRestaurant: (req, res, callback) => {
     if (!req.body.name) {
       return callback({ status: 'error', message: "name didn't exist" })
@@ -136,6 +135,16 @@ const adminServices = {
           })
       })
   },
+  deleteCategory: (req, res, callback) => {
+    Category.findByPk(req.params.id)
+      .then(category => {
+        category.destroy()
+          .then(() => {
+            return callback({ status: 'success', message: '' })
+          })
+      })
+  }
+
 }
 
 module.exports = adminServices
