@@ -13,6 +13,17 @@ const adminServices = {
       return callback({ restaurant: restaurant.toJSON() })
     })
   },
+  getCategories: (req, res, callback) => {
+    return Category.findAll({ raw: true, nest: true })
+      .then(categories => {
+        if (req.params.id) {
+          Category.findByPk(req.params.id)
+            .then(category => { return callback({ categories, category: category.toJSON() }) })
+        } else {
+          return callback({ categories })
+        }
+      })
+  },
 }
 
 module.exports = adminServices
