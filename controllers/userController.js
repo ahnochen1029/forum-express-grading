@@ -64,8 +64,11 @@ const userController = {
     }).then(user => {
       const profile = user.toJSON()
       profileComments = user.toJSON().Comments.map(r => r.Restaurant)
+      const uniqueComment = profileComments.filter((element, index, array) => {
+        return array.findIndex(ele => ele.RestaurantId === element.RestaurantId) === index
+      })
       return res.render('profile', {
-        profile, profileComments
+        profile, profileComments: uniqueComment
       })
     })
   },
