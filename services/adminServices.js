@@ -115,6 +115,15 @@ const adminServices = {
         })
     }
   },
+  postCategories: (req, res, callback) => {
+    if (!req.body.name) {
+      return callback({ status: 'error', message: "category didn't exist" })
+    }
+    return Category.create({ name: req.body.name })
+      .then(category => {
+        return callback({ status: 'success', message: `create new category: ${category.name}` })
+      })
+  },
 }
 
 module.exports = adminServices
