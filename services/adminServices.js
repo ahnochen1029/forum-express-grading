@@ -162,9 +162,19 @@ const adminServices = {
   },
   getUsers: (req, res, callback) => {
     User.findAll({ raw: true, nest: true }).then(users => {
+      console.log('users', users)
       return callback({ users })
       // res.render('admin/users', { users })
     })
+  },
+  putUsers: (req, res, callback) => {
+    User.findByPk(req.params.id)
+      .then((user) => {
+        user.isAdmin = !user.isAdmin
+        user.save().then((user) => {
+          return callback({ status: 'success', message: `User ${user.name} was changed successfully！` })
+        })
+      })
   },
 }
 

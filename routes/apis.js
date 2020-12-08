@@ -27,6 +27,7 @@ router.put('/admin/restaurants/:id', authenticated, authenticatedAdmin, upload.s
 router.delete('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.deleteRestaurant)
 router.get('/admin/restaurants/:id/edit', authenticated, authenticatedAdmin, adminController.editRestaurant)
 router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
+router.put('/admin/users/:id/toggleAdmin', authenticated, authenticatedAdmin, adminController.putUsers)
 
 
 router.get('/admin/categories', authenticated, authenticatedAdmin, categoryController.getCategories)

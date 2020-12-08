@@ -69,15 +69,10 @@ const adminController = {
   },
 
   putUsers: (req, res) => {
-    User.findByPk(req.params.id)
-      .then((user) => {
-        user.isAdmin = !user.isAdmin
-        user.save().then((user) => {
-          req.flash('success_messages', `User ${user.name} was changed successfully！`)
-          res.redirect('/admin/users')
-        })
-      })
-      .catch(error => console.log(error))
+    adminServices.putUsers(req, res, data => {
+      req.flash('success_messages', data['message'])
+      return res.redirect('/admin/users')
+    })
   }
 }
 
