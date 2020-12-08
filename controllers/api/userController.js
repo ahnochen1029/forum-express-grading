@@ -36,7 +36,25 @@ let userController = {
           }
         })
       })
-  }
+  },
+  signUp: (req, res) => {
+    const { name, email, password } = req.body
+    if (req.body.passwordCheck !== req.body.password) {
+      return res.json({ status: 'error', message: '兩次密碼輸入不同！' })
+    } else {
+      User.findOne({ where: { email: email } }).then(user => {
+        if (user) {
+          return res.json({ status: 'error', message: '信箱已被註冊！' })
+        } else {
+          User.create({
+            name, email, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+          }).then(user => {
+            return res.json({ status: 'success', message: '成功註冊帳號！' })
+          })
+        }
+      })
+    }
+  },
 }
 
 module.exports = userController
