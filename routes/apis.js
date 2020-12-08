@@ -6,6 +6,7 @@ const router = express.Router()
 
 const adminController = require('../controllers/api/adminController')
 const categoryController = require('../controllers/api/categoryConteoller')
+const userController = require('../controllers/api/userController.js')
 
 router.get('/admin/restaurants', adminController.getRestaurants)
 router.get('/admin/restaurant/:id', adminController.getRestaurant)
@@ -17,5 +18,7 @@ router.delete('/admin/restaurants/:id', adminController.deleteRestaurant)
 router.post('/admin/categories', categoryController.postCategories)
 router.put('/admin/categories/:id', categoryController.putCategory)
 router.delete('/admin/categories/:id', categoryController.deleteCategory)
+
+router.post('/signin', userController.signIn)
 
 module.exports = router
