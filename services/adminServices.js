@@ -10,6 +10,12 @@ const adminServices = {
       return callback({ restaurants })
     })
   },
+  createRestaurant: (req, res, callback) => {
+    return Category.findAll({ raw: true, nest: true })
+      .then(categories => {
+        return callback({ categories })
+      })
+  },
   getRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id, { include: [Category] }).then((restaurant) => {
       return callback({ restaurant: restaurant.toJSON() })
