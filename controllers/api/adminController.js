@@ -32,6 +32,11 @@ const adminController = {
       return res.json(data)
     })
   },
+  editRestaurant: (req, res) => {
+    adminServices.editRestaurant(req, res, data => {
+      return res.json(data)
+    })
+  },
 }
 
 module.exports = adminController

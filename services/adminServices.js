@@ -143,7 +143,16 @@ const adminServices = {
             return callback({ status: 'success', message: '' })
           })
       })
-  }
+  },
+  editRestaurant: (req, res, callback) => {
+    Category.findAll({ raw: true, nest: true })
+      .then(categories => {
+        return Restaurant.findByPk(req.params.id)
+          .then(restaurant => {
+            return callback({ restaurant: restaurant.toJSON(), categories })
+          })
+      })
+  },
 
 }
 
