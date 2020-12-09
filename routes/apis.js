@@ -48,4 +48,15 @@ router.get('/restaurants/top', authenticated, restController.getTopRestaurant)
 router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
+router.get('/users/top', authenticated, userController.getTopUser)
+router.get('/users/:id', authenticated, userController.getProfile)
+router.get('/users/:id/edit', authenticated, userController.getProfileEdit)
+router.put('/users/:id', authenticated, upload.single('image'), userController.putProfile)
+router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
+router.post('/like/:restaurantId', authenticated, userController.likeRestaurant)
+router.delete('/like/:restaurantId', authenticated, userController.unlikeRestaurant)
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete('/following/:userId', authenticated, userController.removeFollowing)
+
 module.exports = router

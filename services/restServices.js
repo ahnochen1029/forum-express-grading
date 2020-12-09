@@ -77,7 +77,6 @@ const restServices = {
           const isLiked = restaurant.LikedUsers.map(e => e.id).includes(USERID)
           const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(USERID)
           return callback({ restaurant: restaurant.toJSON(), isFavorited, isLiked })
-          // return res.render('restaurant', { restaurant: restaurant.toJSON(), isFavorited, isLiked })
         })
       })
   },
@@ -124,7 +123,6 @@ const restServices = {
       })
     ]).then(([restaurant, comments, favorite]) => {
       return callback({ restaurant, commentsCount: comments.count, favoriteCount: favorite.rows.length })
-      // return res.render('restDashboard', { restaurant, commentsCount: comments.count, favoriteCount: favorite.rows.length })
     })
   },
   getTopRestaurant: (req, res, callback) => {

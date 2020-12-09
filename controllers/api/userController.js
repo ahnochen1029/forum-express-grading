@@ -8,6 +8,8 @@ const { use } = require('chai')
 const ExtractJWT = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.JwtStrategy
 
+const userServices = require('../../services/userServices')
+
 let userController = {
   signIn: (req, res) => {
     // 檢查必要資料
@@ -55,6 +57,56 @@ let userController = {
       })
     }
   },
+  getProfile: (req, res) => {
+    userServices.getProfile(req, res, data => {
+      return res.json(data)
+    })
+  },
+  getProfileEdit: (req, res) => {
+    userServices.getProfileEdit(req, res, data => {
+      return res.json(data)
+    })
+  },
+  putProfile: (req, res) => {
+    userServices.putProfile(req, res, data => {
+      return res.json(data)
+    })
+  },
+  addFavorite: (req, res) => {
+    userServices.addFavorite(req, res, data => {
+      return res.json(data)
+    })
+  },
+  removeFavorite: (req, res) => {
+    userServices.removeFavorite(req, res, data => {
+      return res.json(data)
+    })
+  },
+  likeRestaurant: (req, res) => {
+    userServices.likeRestaurant(req, res, data => {
+      return res.json(data)
+    })
+  },
+  unlikeRestaurant: (req, res) => {
+    userServices.unlikeRestaurant(req, res, data => {
+      return res.json(data)
+    })
+  },
+  getTopUser: (req, res) => {
+    userServices.getTopUser(req, res, data => {
+      return res.json(data)
+    })
+  },
+  addFollowing: (req, res) => {
+    userServices.addFollowing(req, res, data => {
+      return res.json(data)
+    })
+  },
+  removeFollowing: (req, res) => {
+    userServices.removeFollowing(req, res, data => {
+      return res.json(data)
+    })
+  }
 }
 
 module.exports = userController
