@@ -1,31 +1,30 @@
-const restServices = require('../services/restServices')
+const restServices = require('../../services/restServices')
 
 const restController = {
   getRestaurants: (req, res) => {
     restServices.getRestaurants(req, res, data => {
-      return res.render('restaurants', data)
+      return res.json(data)
     })
   },
   getRestaurant: (req, res) => {
     restServices.getRestaurant(req, res, data => {
-      return res.render('restaurant', data)
+      return res.json(data)
     })
   },
   getFeeds: (req, res) => {
     restServices.getFeeds(req, res, data => {
-      return res.render('feeds', data)
+      return res.json(data)
     })
   },
   getDashboard: (req, res) => {
     restServices.getDashboard(req, res, data => {
-      return res.render('restDashboard', data)
+      return res.json(data)
     })
   },
   getTopRestaurant: (req, res) => {
     restServices.getTopRestaurant(req, res, data => {
-      res.render('topRestaurants', data)
+      return res.json(data)
     })
-  },
+  }
 }
-
 module.exports = restController

@@ -8,6 +8,7 @@ const upload = multer({ dest: 'temp/' })
 const adminController = require('../controllers/api/adminController')
 const categoryController = require('../controllers/api/categoryConteoller')
 const userController = require('../controllers/api/userController.js')
+const restController = require('../controllers/api/restController')
 
 const authenticated = passport.authenticate('jwt', { session: false })
 const authenticatedAdmin = (req, res, next) => {
@@ -40,5 +41,11 @@ router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, catego
 
 router.post('/signin', userController.signIn)
 router.post('/signup', userController.signUp)
+
+router.get('/restaurants', authenticated, restController.getRestaurants)
+router.get('/restaurants/feeds', authenticated, restController.getFeeds)
+router.get('/restaurants/top', authenticated, restController.getTopRestaurant)
+router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
+router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
 module.exports = router
