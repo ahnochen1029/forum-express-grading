@@ -4,7 +4,7 @@ const User = db.User
 
 const jwt = require('jsonwebtoken')
 const passportJWT = require('passport-jwt')
-const { use } = require('chai')
+
 const ExtractJWT = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.JwtStrategy
 
