@@ -9,6 +9,7 @@ const adminController = require('../controllers/api/adminController')
 const categoryController = require('../controllers/api/categoryConteoller')
 const userController = require('../controllers/api/userController.js')
 const restController = require('../controllers/api/restController')
+const commentController = require('../controllers/api/commentController')
 
 const authenticated = passport.authenticate('jwt', { session: false })
 const authenticatedAdmin = (req, res, next) => {
@@ -58,5 +59,8 @@ router.post('/like/:restaurantId', authenticated, userController.likeRestaurant)
 router.delete('/like/:restaurantId', authenticated, userController.unlikeRestaurant)
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)
+
+router.post('/comments', authenticated, commentController.postComment)
+router.delete('/comments/:id', authenticated, authenticatedAdmin, commentController.deleteComment)
 
 module.exports = router

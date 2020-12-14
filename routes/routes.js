@@ -20,7 +20,6 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    console.log('helpers.getUser(req)', helpers.getUser(req))
     if (helpers.getUser(req).isAdmin) { return next() }
     return res.redirect('/')
   }
